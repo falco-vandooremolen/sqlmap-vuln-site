@@ -1,0 +1,25 @@
+version: "3.7"
+
+services:
+  php:
+    image: verzuimsignaal/php:8.0-dev
+    volumes:
+      - ./:/app
+    restart: unless-stopped
+
+  web:
+    image: verzuimsignaal/nginx:legacy
+    volumes:
+      - .:/app
+    restart: unless-stopped
+    ports:
+      - "666:80"
+  
+  mariadb:
+    image: mariadb
+    environment:
+      MARIADB_ROOT_PASSWORD: "verySecureP@$$w0rd"
+    volumes:
+      - ./mariadb/datadir:/var/lib/mysql
+    ports:
+      - "3306:3306"
